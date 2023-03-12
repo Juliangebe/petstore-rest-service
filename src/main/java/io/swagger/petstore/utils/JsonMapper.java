@@ -46,7 +46,6 @@ public class JsonMapper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return object;
     }
 
