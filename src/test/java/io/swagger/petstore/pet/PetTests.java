@@ -7,8 +7,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.*;
 
@@ -28,11 +26,12 @@ public class PetTests {
         updatePetBody = JsonMapper.jsonToString("src/test/resources/jsonfiles/pet/petUpdateBody.json");
         createPetModel = new JSONObject(createPetBody);
         updatePetModel = new JSONObject(updatePetBody);
+
     }
 
     @BeforeEach
     public void createData() {
-        PostRequests.addPet(createPetBody);
+        PetPostRequests.addPet(createPetBody);
     }
 
     @Test
@@ -40,7 +39,7 @@ public class PetTests {
     public void addNewPet() {
 
         Response response =
-                GetRequests.byId(createPetModel.getInt("id"))
+                PetGetRequests.byId(createPetModel.getInt("id"))
                         .then().statusCode(200)
                         .body("id", notNullValue())
                         .log().all()
@@ -55,9 +54,9 @@ public class PetTests {
     @DisplayName("Should update and validate the pet data")
     public void updatePet() {
 
-        PutRequests.updatePet(updatePetBody);
+        PetPutRequests.updatePet(updatePetBody);
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)
                 .assertThat()
                 .body("category.name", equalTo(updatePetModel.getJSONObject("category").getString("name")))
@@ -70,14 +69,14 @@ public class PetTests {
     @DisplayName("Should delete and verify the pet data")
     public void deletePet() {
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)
                 .body("id", notNullValue())
                 .log().ifError();
 
-        DeleteRequests.byId(createPetModel.getInt("id"));
+        PetDeleteRequests.byId(createPetModel.getInt("id"));
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(404)
                 .statusLine("HTTP/1.1 404 Not Found")
                 .log().ifError();
@@ -89,19 +88,19 @@ public class PetTests {
     @DisplayName("E2E TEST : Should create,update,list and delete the pet data")
     public void e2eTest() {
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)
                 .body("id", notNullValue());
 
-        PutRequests.updatePet(updatePetBody);
+        PetPutRequests.updatePet(updatePetBody);
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)
                 .body("status", equalTo(updatePetModel.getString("status")));
 
-        DeleteRequests.byId(createPetModel.getInt("id"));
+        PetDeleteRequests.byId(createPetModel.getInt("id"));
 
-        GetRequests.byId(createPetModel.getInt("id"))
+        PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(404)
                 .statusLine("HTTP/1.1 404 Not Found")
                 .log().ifError();

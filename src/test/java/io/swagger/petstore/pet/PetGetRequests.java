@@ -8,9 +8,9 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 
-public class GetRequests {
+public class PetGetRequests {
 
-    public GetRequests() {
+    public PetGetRequests() {
     }
 
 

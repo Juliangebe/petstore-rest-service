@@ -4,8 +4,8 @@ import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
 
-public class DeleteRequests {
-    public DeleteRequests() {
+public class PetDeleteRequests {
+    public PetDeleteRequests() {
     }
 
     public static void byId(int id) {

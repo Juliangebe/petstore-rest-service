@@ -4,9 +4,9 @@ import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.given;
 
-public class PutRequests {
+public class PetPutRequests {
 
-    public PutRequests() {
+    public PetPutRequests() {
     }
 
     public static void updatePet(String body) {
