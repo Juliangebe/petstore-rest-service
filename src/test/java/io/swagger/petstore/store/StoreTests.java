@@ -24,12 +24,15 @@ public class StoreTests {
         RestAssured.basePath = "/api/v3";
         placeOrderBody = JsonMapper.jsonToString("src/test/resources/jsonfiles/store/placeOrderBody.json");
         placeOrderModel = new JSONObject(placeOrderBody);
+
+
     }
 
 
     @Test
     @DisplayName("Should list,place order,delete and verify the store data")
-    public void e2eTest() {
+    public void e2eStoreTest() {
+
         int initialValue =
                 StoreGetRequests.inventoriesByStatus().then().statusCode(200).log().all()
                         .extract().response().jsonPath().getInt(placeOrderModel.getString("status"));

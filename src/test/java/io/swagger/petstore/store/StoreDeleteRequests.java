@@ -13,6 +13,7 @@ public class StoreDeleteRequests {
         given()
                 .contentType(ContentType.JSON)
                 .pathParam("orderId", orderId)
-                .delete("/store/order/{orderId}");
+                .delete("/store/order/{orderId}")
+                .then().log().ifError();
     }
 }

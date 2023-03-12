@@ -47,7 +47,6 @@ public class PetTests {
 
         Assertions.assertEquals(response.jsonPath().getInt("id"), createPetModel.getInt("id"));
 
-
     }
 
     @Test
@@ -61,7 +60,6 @@ public class PetTests {
                 .assertThat()
                 .body("category.name", equalTo(updatePetModel.getJSONObject("category").getString("name")))
                 .log().all();
-
 
     }
 
@@ -81,12 +79,11 @@ public class PetTests {
                 .statusLine("HTTP/1.1 404 Not Found")
                 .log().ifError();
 
-
     }
 
     @Test
     @DisplayName("E2E TEST : Should create,update,list and delete the pet data")
-    public void e2eTest() {
+    public void e2ePetTest() {
 
         PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)

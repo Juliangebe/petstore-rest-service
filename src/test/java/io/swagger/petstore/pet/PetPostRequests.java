@@ -17,7 +17,8 @@ public class PetPostRequests {
         given()
                 .contentType(ContentType.JSON)
                 .body(body)
-                .post("/pet");
+                .post("/pet")
+                .then().log().ifError();
 
     }
 

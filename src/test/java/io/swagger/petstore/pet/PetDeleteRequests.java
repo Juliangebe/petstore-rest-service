@@ -13,6 +13,7 @@ public class PetDeleteRequests {
         given()
                 .contentType(ContentType.JSON)
                 .pathParam("petId", id)
-                .delete("/pet/{petId}");
+                .delete("/pet/{petId}")
+                .then().log().ifError();
     }
 }

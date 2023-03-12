@@ -14,8 +14,9 @@ public class PetPutRequests {
         given()
                 .contentType(ContentType.JSON)
                 .body(body)
-                .post("/pet")
-                .then().statusCode(200);
+                .put("/pet")
+                .then().statusCode(200)
+                .log().ifError();
 
 
     }
