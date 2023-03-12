@@ -1,7 +1,6 @@
 package io.swagger.petstore.user;
 
 import io.restassured.RestAssured;
-import io.restassured.response.Response;
 import io.swagger.petstore.models.UserModel;
 import io.swagger.petstore.utils.JsonMapper;
 import org.junit.jupiter.api.*;
@@ -32,6 +31,7 @@ public class UserTests {
     }
 
     @Test
+    @DisplayName("E2E TEST : should use all user functionalities successfully")
     public void e2eUserTest() {
 
         loginUserTest();

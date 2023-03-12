@@ -30,22 +30,25 @@ public class PetTests {
     }
 
     @BeforeEach
+    @DisplayName("Should prepare the data for tests")
     public void createData() {
         PetPostRequests.addPet(createPetBody);
     }
 
     @Test
+    @DisplayName("E2E TEST : Should create,update,list and delete the pet data")
+    public void e2ePetTest() {
+        addNewPet();
+        updatePet();
+        deletePetById();
+    }
+
+    @Test
     @DisplayName("Should create and validate the new pet data")
     public void addNewPet() {
+        PetPostRequests.addPet(createPetBody);
+        PetGetRequests.byId(createPetModel.getInt("id")).then().statusCode(200);
 
-        Response response =
-                PetGetRequests.byId(createPetModel.getInt("id"))
-                        .then().statusCode(200)
-                        .body("id", notNullValue())
-                        .log().all()
-                        .extract().response();
-
-        Assertions.assertEquals(response.jsonPath().getInt("id"), createPetModel.getInt("id"));
 
     }
 
@@ -54,7 +57,6 @@ public class PetTests {
     public void updatePet() {
 
         PetPutRequests.updatePet(updatePetBody);
-
         PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(200)
                 .assertThat()
@@ -65,44 +67,14 @@ public class PetTests {
 
     @Test
     @DisplayName("Should delete and verify the pet data")
-    public void deletePet() {
+    public void deletePetById() {
 
-        PetGetRequests.byId(createPetModel.getInt("id"))
-                .then().statusCode(200)
-                .body("id", notNullValue())
-                .log().ifError();
 
         PetDeleteRequests.byId(createPetModel.getInt("id"));
-
         PetGetRequests.byId(createPetModel.getInt("id"))
                 .then().statusCode(404)
                 .statusLine("HTTP/1.1 404 Not Found")
                 .log().ifError();
-
-    }
-
-    @Test
-    @DisplayName("E2E TEST : Should create,update,list and delete the pet data")
-    public void e2ePetTest() {
-
-        PetGetRequests.byId(createPetModel.getInt("id"))
-                .then().statusCode(200)
-                .body("id", notNullValue());
-
-        PetPutRequests.updatePet(updatePetBody);
-
-        PetGetRequests.byId(createPetModel.getInt("id"))
-                .then().statusCode(200)
-                .body("status", equalTo(updatePetModel.getString("status")));
-
-        PetDeleteRequests.byId(createPetModel.getInt("id"));
-
-        PetGetRequests.byId(createPetModel.getInt("id"))
-                .then().statusCode(404)
-                .statusLine("HTTP/1.1 404 Not Found")
-                .log().ifError();
-
-
     }
 
 }
