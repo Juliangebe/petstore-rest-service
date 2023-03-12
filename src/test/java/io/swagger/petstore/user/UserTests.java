@@ -1,39 +1,77 @@
 package io.swagger.petstore.user;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import io.swagger.petstore.models.UserModel;
 import io.swagger.petstore.utils.JsonMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.io.File;
 import java.io.IOException;
 
 public class UserTests {
 
     static UserModel userModel;
+    static UserModel updateUserModel;
+    static String createUserBody;
+    static String updateUserBody;
 
     @BeforeAll
     public static void setUp() throws IOException {
         RestAssured.baseURI = "http://localhost:8080";
         RestAssured.basePath = "/api/v3";
-        String placeOrderBody = JsonMapper.jsonToString("src/test/resources/jsonfiles/user/createSingleUserBody.json");
-        userModel = (UserModel) JsonMapper.jsonStringToModel(placeOrderBody, UserModel.class);
+        createUserBody = JsonMapper.jsonToString("src/test/resources/jsonfiles/user/createSingleUserBody.json");
+        userModel = (UserModel) JsonMapper.jsonStringToModel(createUserBody, UserModel.class);
+        updateUserBody = JsonMapper.jsonToString("src/test/resources/jsonfiles/user/updateSingleUserBody.json");
+        updateUserModel = (UserModel) JsonMapper.jsonStringToModel(createUserBody, UserModel.class);
+    }
+
+    @BeforeEach
+    @DisplayName("Should prepare the data for tests")
+    public void createData() {
+        UserPostRequests.createUser(createUserBody);
     }
 
     @Test
     public void e2eUserTest() {
 
-
-
-
-        UserGetRequests.userLogin("automation", "test").then().statusCode(200).log().all();
-        UserDeleteRequests.byUsername("automation");
-        UserGetRequests.getByUsername("automation").then().statusCode(404).log().all();
-
+        loginUserTest();
+        logoutUserTest();
+        updateEmailUserTest();
+        deleteUserTest();
 
     }
+
+    @Test
+    @DisplayName("Should log in successfully")
+    public void loginUserTest() {
+        UserGetRequests.getByUsername(userModel.getUsername()).then().statusCode(200).log().all();
+        UserGetRequests.userLogin(userModel.getUsername(), userModel.getPassword()).then().log().ifError();
+
+    }
+
+    @Test
+    @DisplayName("Should logout successfully")
+    public void logoutUserTest() {
+        UserGetRequests.userLogout();
+    }
+
+    @Test
+    @DisplayName("Should delete the logged in user successfully")
+    public void deleteUserTest() {
+        UserDeleteRequests.byUsername(userModel.getUsername());
+        UserGetRequests.getByUsername(userModel.getUsername()).then().statusCode(404).log().all();
+
+    }
+
+    @Test
+    @DisplayName("Should update the logged in user successfully")
+    public void updateEmailUserTest() {
+        String initialEmail = UserGetRequests.getByUsername(userModel.getUsername()).then().log().all().extract().jsonPath().getString("email");
+        UserPutRequests.updateUserByName(updateUserBody, updateUserModel.getUsername());
+        String finalEmail = UserGetRequests.getByUsername(userModel.getUsername()).then().log().all().extract().jsonPath().getString("email");
+        Assertions.assertNotEquals(initialEmail, finalEmail);
+
+    }
+
+
 }
