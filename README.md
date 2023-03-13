@@ -38,7 +38,7 @@ The example below shows how to run the test for each pipeline stage:
 You also can execute each test class on  `src\test\java` and execute all of them individually or as Suite.
 
 # NOTE
-### When the report is generated, live and detailed documentation on the test cases is generated, such as its name, its unique record, input data, expected result, status. Since this is the idea of a test automation that helps to test a test suite quickly helping continuous deliveries, saving time and money.
+### When the report is generated, live and detailed documentation on the test cases is generated, such as its name, its unique record, input data, expected result,time execution, status. Since this is the idea of a test automation that helps to test a test suite quickly helping continuous deliveries, saving time and money.
 ## List of test cases proposed for automation.
 Test created for each functionality necessary to perform an e2e flow.
 
@@ -64,6 +64,9 @@ Test created for each functionality necessary to perform an e2e flow.
 * Delete user by id : expected to delete user information.
 * E2E Test : modifies and verifies the creation, update, deletion and listing of the data used in the functionality,which modifies and verifies the creation, update, deletion and listing of the data used in the functionality, making use of all the components and exchanging information between tests.
 
+![image](https://user-images.githubusercontent.com/32660114/224604421-e721af6b-f16e-4ed7-bb76-514085a385b1.png)
+
+
 # Explanation of the provided solution
 Encapsulated methods were created with the current functionalities of the application, to be able to be called in one or several tests that need it and thus help with reusability and help make the code more extensible.
 The basic functionalities that are necessary for the system to work as a whole and carry out complete test scenarios were tested separately.
@@ -75,7 +78,7 @@ The methods were created to be used generically in different tests.
 Libraries such as Jackson were added and utilities for handling Json and created data models.
 Junit is used as a tool to run the tests and maven's surefire plugin for general documentation.
 
-### All these tools together with good development practices help us create scalable, maintainable and extensible systems, some factors such as design patterns, libraries, validations, abstraction level, are things that can be discussed with the work team or adapted according to the needs of the client or the business rules, everything proposed in this development is based on good practices and knowledge that can be adapted to the requirements.
+### All these tools together together with good development practices help us create scalable, maintainable and extensible systems, some factors such as design patterns, libraries, validations, reporting tools such as Allure, libraries to log information such as log4j, the abstraction level. These are things that can be proposed and discussed with the work team or adapted according to the needs of the client or the business rules. Everything proposed in this development is based on good practices and knowledge that can be adapted to the requirements.
 
 
 
