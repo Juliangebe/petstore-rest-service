@@ -78,7 +78,7 @@ The methods were created to be used generically in different tests.
 Libraries such as Jackson were added and utilities for handling Json and created data models.
 Junit is used as a tool to run the tests and maven's surefire plugin for general documentation.
 
-### All these tools together together with good development practices help us create scalable, maintainable and extensible systems, some factors such as design patterns, libraries, validations, reporting tools such as Allure, libraries to log information such as log4j, the abstraction level. These are things that can be proposed and discussed with the work team or adapted according to the needs of the client or the business rules. Everything proposed in this development is based on good practices and knowledge that can be adapted to the requirements.
+### All these tools together together with good development practices help us create scalable, maintainable and extensible systems, some factors such as design patterns, libraries, validations, reporting tools such as Allure, libraries to log information such as log4j, the abstraction level,where the data is validated from. These are things that can be proposed and discussed with the work team or adapted according to the needs of the client or the business rules. Everything proposed in this development is based on good practices and knowledge that can be adapted to the requirements.
 
 
 
