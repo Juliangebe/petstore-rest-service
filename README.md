@@ -16,7 +16,7 @@ This Java project uses the Rest assured library to test Restful Web services, a 
 To run all the tests,run this task:
 
 ```
-mvn suite 
+mvn clean site 
 ```
 This will run all the tests with the `@Test` annotation and generates an `.html` report on  the generated source `target/site/surefire-report.html`.
 
